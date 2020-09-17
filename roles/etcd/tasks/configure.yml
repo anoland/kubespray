@@ -19,7 +19,7 @@
     ETCDCTL_ENDPOINTS: "{{ etcd_access_addresses }}"
 
 - name: Configure | Check if etcd-events cluster is healthy
-  shell: "set -o pipefail && {{ bin_dir }}/etcdctl endpoint --cluster status && {{ bin_dir }}/etcdctl endpoint --cluster health  2>&1 | grep -q -v 'Error: unhealthy cluster'"
+  shell: "set -o pipefail && {{ bin_dir }}/etcdctl endpoint --cluster status && {{ bin_dir }}/etcdctl endpoint --cluster health  2>&1 | grep -v 'Error: unhealthy cluster' 1> /dev/null 2>&1"
   args:
     executable: /bin/bash
   register: etcd_events_cluster_is_healthy
